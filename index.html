@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+        .main_visual { background-color: #171717; overflow: hidden; position: relative; width: 100%; height: 800px; }
+
+        .main_visual .visula_area { width: calc(3246px - 170px); position: absolute;  top: 0;  left: 0; }
+        .main_visual .basic_img { position: relative; z-index: 14;  }
+
+        .main_visual .visula_wrap { position: relative; float: left; height: 100%; }
+        .main_visual .visula_wrap_le {  }
+        .main_visual .visula_wrap_ri.off { margin-left: -170px; }
+        .main_visual .visula_wrap .gradient { opacity: 0;  visibility: hidden; position: absolute; top: 0; left: 0; transition:all .4s ease; -webkit-transition:all .4s ease; -ms-transition:all .4s ease; -moz-transition:all .4s ease; -o-transition:all .4s ease;} 
+        .main_visual .visula_wrap.off .gradient { opacity: 1;  visibility: visible; position: absolute; top: 0; left: 0;}
+
+        .main_visual .visula_wrap .back_img { position: relative; z-index: 0; background-size: contain; background-position: left;}
+        .main_visual .clipping_wrap { position: absolute; top: 0; left: 0; z-index: 10; width: 100%;height: 100%; background-repeat: no-repeat; background-position: center; background-size: cover;}
+        .main_visual .visula_wrap_ri  .clipping_wrap { background-size: contain; background-position: left;}
+        .main_visual .visula_wrap.off .clipping_wrap { cursor: pointer;  }
+
+        .main_visual .visula_wrap_le.off, .main_visual .visula_wrap_ri.on { }
+
+
+        .btn_wave { display: block; width: 80px; height: 80px; text-align: center; line-height: 78px; position: absolute;  top: 50%; margin-top: -40px; left: calc(1623px - 120px); /* transform:translateY(-50%) ;  -webkit-transform:translateY(-50%); -o-transform:translateY(-50%);-ms-transform:translateY(-50%);-moz-transform:translateY(-50%);  z-index: 15; */ }
+        .btn_wave .off_img { display: none}
+
+        .btn_wave.on .on_img { display: none }
+        .btn_wave.on .off_img { display: inline-block}
+        .btn_wave img { width: 26px }
+        .btn_wave .btn_wave_circle { 	width: 80px;height: 80px;border-radius: 50%; position: absolute; top: 50%; left: 50%;-webkit-transform:translate(-50%, -50%) ; 	-o-transform:translate(-50%, -50%) ; 	-ms-transform:translate(-50%, -50%) ; 	-moz-transform:translate(-50%, -50%) ; 	transition: background-color 0.3s ease;  }
+        .btn_wave .btn_wave_circle.size_s { z-index: 11; background: linear-gradient(2deg,#171717 0%, #474747 99%) ; background: -webkit-linear-gradient(2deg,#171717 0%, #474747 99%); background: -moz-linear-gradient(2deg,#171717 0%, #474747 99%);box-shadow: 5px 5px 10px 0px rgb(0 0 0 / 8%); }
+        .btn_wave .btn_wave_circle.size_m { z-index: 10; background: linear-gradient(2deg, rgba(4, 4, 4, 0.5) 9%, rgba(56, 56, 56, 0.5) 99%) ; background: -webkit-linear-gradient(2deg, rgba(4, 4, 4, 0.5) 9%, rgba(56, 56, 56, 0.5) 99%);  background: -moz-linear-gradient(2deg, rgba(4, 4, 4, 0.5) 9%, rgba(56, 56, 56, 0.5) 99%);box-shadow: 5px 5px 10px 0px rgb(0 0 0 / 23%);  opacity: 0; animation: wave_pulse_m 1.25s 0.25s linear infinite; }
+        .btn_wave .btn_wave_circle.size_l {	z-index: 9; background: linear-gradient(2deg, rgba(4, 4, 4, 0.5) 9%, rgba(56, 56, 56, 0.5) 99%) ; background: -webkit-linear-gradient(2deg, rgba(4, 4, 4, 0.5) 9%, rgba(56, 56, 56, 0.5) 99%);  background: -moz-linear-gradient(2deg, rgba(4, 4, 4, 0.5) 9%, rgba(56, 56, 56, 0.5) 99%);box-shadow: 5px 5px 10px 0px rgb(0 0 0 / 23%);  opacity: 0; animation: wave_pulse_l 1.25s 0.25s linear infinite; }
+
+        @keyframes wave_pulse_m {
+            0% {
+                width: 60px;
+                height: 60px;
+                opacity: 0;
+            }
+            25% {
+                width: 76px;
+                height: 76px;
+                opacity: 0.5;
+            }
+            50% {
+                width: 92px;
+                height: 92px;
+                opacity: 1;
+            }
+            75% {
+                width: 96px;
+                height: 96px;
+                opacity: 0.5;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes wave_pulse_l {
+            0% {
+                width: 75px;
+                height: 75px;
+                opacity: 0;
+            }
+            25% {
+                width: 90px;
+                height: 90px;
+                opacity: 0.5;
+            }
+            50% {
+                width: 107px;
+                height: 107px;
+                opacity: 1;
+            }
+            75% {
+                width: 111px;
+                height: 111px;
+                opacity: 0.5;
+            }
+            100% {
+                width: 115px;
+                height: 115px;
+                opacity: 0;
+            }
+        }
+
+        .clear:after {
+            clear: both;
+            content: '';
+            display: block;
+        }
+
+        .basic_img{opacity:0; visibility:hidden; height:auto; width: 100%; vertical-align: middle;}
+        .back_img{background-repeat:no-repeat; background-size:cover; background-position:50% 50%;}
+
+        .tamo { display : none;}
+
+        @media screen and (max-width: 1920px){
+            .pcta { display: none;}
+            .tamo { display : inline-block;}
+
+            .main_visual { height: auto; overflow: initial; }
+
+            .main_visual .visula_area { width: 132%;   }
+            .main_visual .visula_wrap { width: 53%;}
+            .main_visual .visula_wrap_ri.off {  margin-left: -6%;}
+
+            .btn_wave { left: calc(63.5vw + 5px); top: 58%; transform: scale(0.8); /* width: 80px; height: 80px; line-height: 78px;*/ }
+            
+            /*
+            .btn_wave img { width: 26px }
+            .btn_wave .btn_wave_circle { 	width: 80px;height: 80px;  }
+
+            @keyframes wave_pulse_m {
+                0% {
+                    width: 60px;
+                    height: 60px;
+                    opacity: 0;
+                }
+                25% {
+                    width: 76px;
+                    height: 76px;
+                    opacity: 0.5;
+                }
+                50% {
+                    width: 92px;
+                    height: 92px;
+                    opacity: 1;
+                }
+                75% {
+                    width: 96px;
+                    height: 96px;
+                    opacity: 0.5;
+                }
+                100% {
+                    width: 100px;
+                    height: 100px;
+                    opacity: 0;
+                }
+            }
+
+            @keyframes wave_pulse_l {
+                0% {
+                    width: 75px;
+                    height: 75px;
+                    opacity: 0;
+                }
+                25% {
+                    width: 90px;
+                    height: 90px;
+                    opacity: 0.5;
+                }
+                50% {
+                    width: 107px;
+                    height: 107px;
+                    opacity: 1;
+                }
+                75% {
+                    width: 111px;
+                    height: 111px;
+                    opacity: 0.5;
+                }
+                100% {
+                    width: 115px;
+                    height: 115px;
+                    opacity: 0;
+                }
+            }*/
+           
+        }
+
+    </style>
+    <script>
+        $(function(){
+
+
+
+            $('.btn_wave').on('click', function(){
+                var winW = $(window).innerWidth();
+                var visualW = $('.visula_area').innerWidth();
+                var moveW = -(visualW - winW) + 'px';     
+                var valOn;
+                var valOff;
+
+                if ( winW > 1920 ) { 
+                    valOn = '30.5%';
+                    valOff = (1623 -120)+'px';
+                } else {
+                    valOn = '32.2vw';
+                    valOff = '63.5vw';
+                }
+
+                $(this).toggleClass('on');
+
+                if ( $(this).hasClass('on') ) {
+                    $('.visula_area').stop().animate({'left': moveW}, 800, function(){
+                        $('.visula_area').css({
+                            'right' : '0px',
+                            'left' : 'initial'
+                        });
+                    });
+                    $(this).stop().animate({'left': valOn }, 800);
+                    //$('.visula_wrap_le').removeClass('on').addClass('off');
+                    //$('.visula_wrap_ri').removeClass('off').addClass('on');
+                } else {
+                    $('.visula_area').stop().animate({'left':'0%'}, 800, function(){
+                        $('.visula_area').css({
+                            'left' : '0px',
+                            'right' : 'initial'
+                        });
+                    });
+                    $(this).stop().animate({'left': valOff } , 800);
+                    //$('.visula_wrap_le').removeClass('off').addClass('on');
+                    //$('.visula_wrap_ri').removeClass('on').addClass('off');
+                }
+                
+            });
+
+        })
+        
+
+    </script>
+</head>
+<body>    
+    <div class="main_visual">
+		<div class="visula_area clear">
+			<div class="visula_wrap visula_wrap_le on">	
+				<div class="back_img pcta">							
+					<img src="main_visula_le.png">								
+				</div>				
+                <div class="back_img tamo" style="background-image:url('main_visula_le.png');">		
+					<img src="main_visula_le.png" class="basic_img">								
+				</div>	
+			</div>
+			<div class="visula_wrap visula_wrap_ri off">			
+				<div class="back_img pcta">					
+					<img src="main_visula_ri.png" >
+				</div>
+                <div class="back_img tamo" style="background-image:url('main_visula_ri.png');">
+					<img src="main_visula_ri.png" class="basic_img">
+				</div>		
+			</div>            
+		</div>	
+        <a href="javascript:;" class="btn_wave">				
+            <div class="btn_wave_circle size_s">
+                <img src="/img/icon_btn_prev.svg" class="on_img">
+                <img src="/img/icon_btn.svg" class="off_img">
+            </div>
+            <div class="btn_wave_circle size_m"></div>
+            <div class="btn_wave_circle size_l"></div>					
+        </a>
+        <img src="main_visula_bg.png" class="basic_img tamo">		
+	</div>
+</body>
+</html>
